@@ -1,0 +1,1 @@
+export default '~/components/app/Loading.vue'

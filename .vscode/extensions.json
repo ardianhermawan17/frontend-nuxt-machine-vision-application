@@ -1,0 +1,15 @@
+{
+    "recommendations": [        
+        "znck.vue",
+        "dariofuzinato.vue-peek",
+        "sdras.vue-vscode-snippets",
+        "octref.vetur",
+        "vuetifyjs.vuetify-vscode",
+        "denifer.mdi-vuetify-intellisense",
+        "esbenp.prettier-vscode",
+        "oderwat.indent-rainbow",
+        "equinusocio.vsc-material-theme-icons",
+        "equinusocio.vsc-material-theme",
+        "TabNine.tabnine-vscode"
+    ]
+}
