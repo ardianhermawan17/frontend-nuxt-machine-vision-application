@@ -4,7 +4,7 @@
       <v-card min-height="440" elevation="0">
         <v-img
           height="150"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+          :src="item.image"
         ></v-img>
 
         <v-card-title
