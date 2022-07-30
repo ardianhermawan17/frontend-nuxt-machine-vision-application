@@ -6,7 +6,7 @@ export default () => ({
         total: null,
         page: null,
         created: 0,
-        limit: 10
+        limit: 8
     },
     loading: true
 })

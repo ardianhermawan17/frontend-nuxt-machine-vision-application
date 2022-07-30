@@ -5,12 +5,10 @@ import _ from 'lodash'
 export default {
     beforeDestroy() {
         this.SET_FILTER({
-            per_page: 5,
-            page: 1,
             total: null,
-            search: null,
-            sortBy: [],
-            desc: []
+            page: null,
+            created: 0,
+            limit: 8
         })
         this.fetchAPI()
     },
@@ -27,28 +25,11 @@ export default {
         updateItemsPerPage: _.throttle(
             function(itemsPerPage) {
                 this.SET_FILTER({
-                    per_page: itemsPerPage
+                    limit: itemsPerPage
                 })
                 this.fetchAPI()
             },
             500
-        ),
-        // onSortBy(query) {
-        //     console.log(query)
-        //     this.SET_FILTER({
-        //         ...this.filter,
-        //         sortBy: query,
-        //     })
-        //     this.fetchAPI()
-        // },
-        // onSortDesc(query) {
-        //     console.log(query)
-        //     const desc = query[0] === false ? 0 : 1
-        //     this.SET_FILTER({
-        //         ...this.filter,
-        //         desc: desc,
-        //     })
-        //     this.fetchAPI()
-        // }
+        )
     }
 }
