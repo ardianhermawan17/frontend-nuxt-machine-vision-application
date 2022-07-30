@@ -14,8 +14,8 @@
 
 <script>
 export default {
-  name: 'HomeSearchBar',
-  data() {
+  name: 'UserSearchInput',
+ data() {
     return {
       search: null
     }

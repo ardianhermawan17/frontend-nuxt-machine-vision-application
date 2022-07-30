@@ -1,6 +1,6 @@
 export default ($axios, resource) => ({
     getList(filter) {
-        return $axios.$get(`${resource}/user`, filter)
+        return $axios.$get(`${resource}/post`, filter)
     },
 
     getListByUser(userId, filter) {

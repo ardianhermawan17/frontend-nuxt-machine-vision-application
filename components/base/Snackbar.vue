@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="fixed d-flex flex-column align-end"
-    style="z-index: 9999"
-  >
+  <div class="fixed d-flex flex-column align-end" style="z-index: 9999">
     <v-snackbar
       v-for="snackbar in snackbars"
       :id="snackbar.id"
@@ -16,18 +13,28 @@
       :left="left"
       :top="top"
       :bottom="bottom"
-      @mouseenter="
-        clearAutoClose(snackbar.id)
-      "
-      @mouseleave="
-        setAutoClose(
-          snackbar.id,
-          snackbar.duration
-        )
-      "
+      @mouseenter="clearAutoClose(snackbar.id)"
+      @mouseleave="setAutoClose(snackbar.id, snackbar.duration)"
     >
       <v-card :color="snackbar.color">
-        <v-row>
+        <!-- confirm -->
+        <div v-if="snackbar.title === 'Confirm'">
+          <v-card-title>
+            {{ snackbar.title }}
+          </v-card-title>
+
+          <v-card-subtitle>
+            {{ snackbar.text }}
+          </v-card-subtitle>
+
+          <v-card-actions class="d-flex justify-center align-center">
+            <v-btn color="white" text @click=";[actionYes()]"> Yes </v-btn>
+            <v-btn color="white" text @click=";[actionNo()]"> No </v-btn>
+          </v-card-actions>
+        </div>
+
+        <!-- Non Confirm -->
+        <v-row v-else>
           <v-col cols="8">
             <v-card-title>
               {{ snackbar.title }}
@@ -37,21 +44,12 @@
               {{ snackbar.text }}
             </v-card-subtitle>
           </v-col>
-          <v-card-actions
-            class="d-flex justify-center align-center"
-          >
+          <v-card-actions class="d-flex justify-center align-center">
             <v-btn
-              color="pink"
-              text              
-              @click="
-                ;[
-                  closeSnackbar(
-                    snackbar
-                  ),
-                  clearAutoClose(
-                    snackbar
-                  )
-                ]">
+              :color="color === 'error' ? 'white' : 'blue'"
+              text
+              @click=";[closeSnackbar(snackbar), clearAutoClose(snackbar)]"
+            >
               Close
             </v-btn>
           </v-card-actions>
@@ -75,6 +73,14 @@ export default {
     color: {
       type: String,
       default: undefined
+    },
+    actionYes: {
+      type: Function,
+      default: () => {}
+    },
+    actionNo: {
+      type: Function,
+      default: () => {}
     },
     top: {
       type: Boolean,
@@ -103,9 +109,7 @@ export default {
   mounted() {
     this.$nuxt.$on(
       'show-snackbar',
-      (snackbar) =>
-        snackbar.name === this.name &&
-        this.showSnackbar(snackbar)
+      (snackbar) => snackbar.name === this.name && this.showSnackbar(snackbar)
     )
   },
   methods: {
@@ -115,47 +119,32 @@ export default {
     },
     showSnackbar(snackbar) {
       const uuid = uuidv4()
-      const s = Object.assign(
-        snackbar,
-        {
-          id: uuid
-        }
-      )
+      const s = Object.assign(snackbar, {
+        id: uuid
+      })
       this.snackbars.push(s)
 
       this.show = true
 
-      this.setAutoClose(
-        uuid,
-        snackbar.duration
-      )
+      this.setAutoClose(uuid, snackbar.duration)
     },
 
     hideSnackbar(snackbar) {
-      this.autoClose[snackbar.id] =
-        setTimeout(() => {
-          this.closeSnackbar(snackbar)
-        }, snackbar.duration)
+      this.autoClose[snackbar.id] = setTimeout(() => {
+        this.closeSnackbar(snackbar)
+      }, snackbar.duration)
     },
 
     closeSnackbar(snackbar) {
-      const snackbarEl =
-        document.getElementById(
-          snackbar.id
-        )
-      snackbarEl.style.animation =
-        'snackbar-out .3s ease-out forwards'
+      const snackbarEl = document.getElementById(snackbar.id)
+      snackbarEl.style.animation = 'snackbar-out .3s ease-out forwards'
 
       setTimeout(() => {
-        const index =
-          this.snackbars.findIndex(
-            (item) =>
-              item.id === snackbar.id
-          )
+        const index = this.snackbars.findIndex(
+          (item) => item.id === snackbar.id
+        )
         this.snackbars.splice(index, 1)
-        delete this.autoClose[
-          snackbar.id
-        ]
+        delete this.autoClose[snackbar.id]
       }, 300)
     },
 
@@ -164,11 +153,7 @@ export default {
         return false
       }
 
-      const snackbar =
-        this.snackbars.find(
-          (snackbar) =>
-            snackbar.id === id
-        )
+      const snackbar = this.snackbars.find((snackbar) => snackbar.id === id)
       this.hideSnackbar(snackbar)
     }
   }
@@ -180,8 +165,7 @@ export default {
   position: fixed;
 }
 .base-snackbar {
-  animation: snackbar 0.3s ease-out
-    forwards;
+  animation: snackbar 0.3s ease-out forwards;
 }
 
 @keyframes snackbar {

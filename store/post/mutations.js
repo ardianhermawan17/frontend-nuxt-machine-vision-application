@@ -21,7 +21,7 @@ export default {
     SET_FILTER(state, filter) {
         filter.total ? state.filter.total = filter.total : ''
         filter.page ? state.filter.page = filter.page : ''
-        filter.limit ? state.filter.limit = filter.limit : 10
+        filter.limit ? state.filter.limit = filter.limit : 8
         filter.created ? state.filter.created = filter.created : 0
     },
 }
