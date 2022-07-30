@@ -11,7 +11,7 @@
       :items-per-page="parseInt(filter.limit)"
       :server-items-length="filter.total"
       :footer-props="{
-        'items-per-page-options': [8, 10, 20, 100]
+        'items-per-page-options': [8, 10, 20, 50]
       }"
       @update:page="onPaginateClick"
       @update:items-per-page="updateItemsPerPage"
