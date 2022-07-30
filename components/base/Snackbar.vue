@@ -28,8 +28,26 @@
           </v-card-subtitle>
 
           <v-card-actions class="d-flex justify-center align-center">
-            <v-btn color="white" text @click=";[actionYes()]"> Yes </v-btn>
-            <v-btn color="white" text @click=";[actionNo()]"> No </v-btn>
+            <v-btn
+              color="white"
+              text
+              @click="
+                ;[
+                  deleteDestination(snackbar),
+                  closeSnackbar(snackbar),
+                  clearAutoClose(snackbar)
+                ]
+              "
+            >
+              Yes
+            </v-btn>
+            <v-btn
+              color="white"
+              text
+              @click=";[closeSnackbar(snackbar), clearAutoClose(snackbar)]"
+            >
+              No
+            </v-btn>
           </v-card-actions>
         </div>
 
@@ -46,8 +64,8 @@
           </v-col>
           <v-card-actions class="d-flex justify-center align-center">
             <v-btn
-              :color="color === 'error' ? 'white' : 'blue'"
-              text
+              color="white"
+              outlined
               @click=";[closeSnackbar(snackbar), clearAutoClose(snackbar)]"
             >
               Close
@@ -74,12 +92,12 @@ export default {
       type: String,
       default: undefined
     },
-    actionYes: {
-      type: Function,
+    itemId: {
+      type: Number,
       default: () => {}
     },
-    actionNo: {
-      type: Function,
+    destination: {
+      type: String,
       default: () => {}
     },
     top: {
@@ -113,6 +131,18 @@ export default {
     )
   },
   methods: {
+    deleteDestination(snackbar) {            
+      switch (snackbar.destination) {
+        case 'User':          
+          this.$deleteUser(snackbar.itemId)
+          break
+        case 'Post':          
+          this.$deletePost(snackbar.itemId)
+          break
+        default:
+          break
+      }
+    },
     clearAutoClose(id) {
       clearTimeout(this.autoClose[id])
       delete this.autoClose[id]
