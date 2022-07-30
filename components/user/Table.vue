@@ -91,35 +91,31 @@ export default {
       this.$baseDialog('open', 'user-edit-form-dialog')
     },
     async deleteItem(item) {
-      // await this.$baseSnackbar('admin-snackbar', {
-      //   title: 'Confirm',
-      //   text: 'Confirmation',
-      //   actionYes: () => {
-      //     console.log('yest')
-      //   },
-      //   actionNo: () => {
-      //     console.log('no')
-      //   },
-      //   color: 'warning',
-      //   duration: 3000
-      // })
+      await this.$baseSnackbar('admin-snackbar', {
+        title: 'Confirm',
+        text: 'Are you sure want to delete this user ?',
+        itemId: item.id,
+        destination: 'User',
+        color: 'info',
+        duration: 3000
+      })
 
-      const res = await this.$store.dispatch('user/deleteUser', item.id)
-      if (!res.error) {
-        this.$baseSnackbar('admin-snackbar', {
-          title: 'Success',
-          text: 'Success delete user !',
-          color: 'success',
-          duration: 3000
-        })
-        this.fetchAPI()
-      } else
-        this.$baseSnackbar('admin-snackbar', {
-          title: 'Delete',
-          text: res.error,
-          color: 'error',
-          duration: 3000
-        })
+      // const res = await this.$store.dispatch('user/deleteUser', item.id)
+      // if (!res.error) {
+      //   this.$baseSnackbar('admin-snackbar', {
+      //     title: 'Success',
+      //     text: 'Success delete user !',
+      //     color: 'success',
+      //     duration: 3000
+      //   })
+      //   this.fetchAPI()
+      // } else
+      //   this.$baseSnackbar('admin-snackbar', {
+      //     title: 'Delete',
+      //     text: res.error,
+      //     color: 'error',
+      //     duration: 3000
+      //   })
     }
   }
 }

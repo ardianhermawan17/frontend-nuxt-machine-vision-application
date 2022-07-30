@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <slot name="toggler" />
-    <base-dialog :name="name" @click:outside="reset">
+    <base-dialog :name="name" >
       <v-card class="blue-grey lighten-5">
         <v-toolbar color="blue-grey lighten-5" elevation="0" class="px-4">
           <v-spacer></v-spacer>

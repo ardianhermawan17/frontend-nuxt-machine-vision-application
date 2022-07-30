@@ -20,7 +20,6 @@ if (!Vue.__global_mixin__) {
                 let rupiah = split[0].substr(0, sisa)
                 const ribuan = split[0].substr(sisa).match(/\d{3}/gi)
 
-
                 if (ribuan) {
                     const separator = sisa ? '.' : ''
                     rupiah += separator + ribuan.join('.')
@@ -28,7 +27,7 @@ if (!Vue.__global_mixin__) {
 
                 rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
                 return prefix + rupiah
-            },
+            }
         },
         computed: {
             $user() {
@@ -41,15 +40,48 @@ if (!Vue.__global_mixin__) {
                 this.$nuxt.$emit('toggle-dialog', { action, dialog })
             },
             $baseSnackbar(name, snackbarData) {
-                this.$nuxt.$emit(
-                    'show-snackbar',
-                    Object.assign(snackbarData, { name })
-                )
+                this.$nuxt.$emit('show-snackbar', Object.assign(snackbarData, { name }))
             },
             $switchDialog(toCloseDialog, toOpenDialog) {
                 this.$baseDialog('close', toCloseDialog)
                 this.$baseDialog('open', toOpenDialog)
+            },
+            async $deleteUser(userId) {
+                const res = await this.$store.dispatch('user/deleteUser', userId)
+                if (!res.error) {
+                    this.$baseSnackbar('admin-snackbar', {
+                        title: 'Success',
+                        text: 'Success delete user !',
+                        color: 'success',
+                        duration: 3000
+                    })
+                    this.$store.dispatch('user/getList')
+                } else
+                    this.$baseSnackbar('admin-snackbar', {
+                        title: 'Delete',
+                        text: res.error,
+                        color: 'error',
+                        duration: 3000
+                    })
+            },
+            async $deletePost(postId) {
+                const res = await this.$store.dispatch('post/deletePost', postId)
+                if (!res.error) {
+                    this.$baseSnackbar('admin-snackbar', {
+                        title: 'Success',
+                        text: 'Success delete user !',
+                        color: 'success',
+                        duration: 3000
+                    })
+                    this.$store.dispatch('post/getList')
+                } else
+                    this.$baseSnackbar('admin-snackbar', {
+                        title: 'Delete',
+                        text: res.error,
+                        color: 'error',
+                        duration: 3000
+                    })
             }
-        },
+        }
     })
 }
